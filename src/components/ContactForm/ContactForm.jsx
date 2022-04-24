@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { MdPersonAddAlt1 } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addContact } from 'redux/contactApi';
+import {
+  useCreateContactMutation,
+  useGetContactsQuery,
+} from 'redux/contactApi';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const [phone, setPhone] = useState('');
+  const { data } = useGetContactsQuery();
+  const [addContact] = useCreateContactMutation();
 
   const handdleChange = event => {
     const name = event.currentTarget.name;
@@ -21,7 +23,7 @@ const ContactForm = () => {
         setName(inputValue);
         break;
       case 'number':
-        setNumber(inputValue);
+        setPhone(inputValue);
         break;
 
       default:
@@ -29,19 +31,21 @@ const ContactForm = () => {
     }
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
-    const searchContact = contacts.some(contact => {
+    const searchContact = await data.some(contact => {
       return contact.name.toLowerCase().includes(name.toLowerCase());
     });
     if (searchContact) {
       toast.error(`${name} is alredy in contacts!!!`);
       return;
     }
-    dispatch(addContact({ name, number }));
+
+    await addContact({ name, phone });
+    toast.success(`${name} has added to contacts list`);
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -61,7 +65,7 @@ const ContactForm = () => {
       <Input
         type="tel"
         name="number"
-        value={number}
+        value={phone}
         id="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

@@ -1,6 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-// import ContactForm from '../ContactForm';
+import ContactForm from '../ContactForm';
 import Filter from '../Filter';
 import ContactList from '../ContactList';
 import { Wrapper, PageTitle, ContactsTitle } from './App.styled';
@@ -10,7 +10,7 @@ const App = () => {
     <Wrapper>
       <PageTitle>Phonebook</PageTitle>
       <ToastContainer theme="colored" />
-      {/* <ContactForm /> */}
+      <ContactForm />
       <ContactsTitle>Contacts</ContactsTitle>
 
       <Filter />
