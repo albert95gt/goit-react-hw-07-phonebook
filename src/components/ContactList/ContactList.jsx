@@ -1,7 +1,7 @@
 import React from 'react';
 import ContactItem from './ContactItem';
 import { MdDeleteForever } from 'react-icons/md';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 // import { removeContact } from '../../redux/contactApi';
 import {
   useGetContactsQuery,
