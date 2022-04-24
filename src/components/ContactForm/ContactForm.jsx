@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { MdPersonAddAlt1 } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addContact } from 'redux/contactSlice';
+import { addContact } from 'redux/contactApi';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
 const ContactForm = () => {
